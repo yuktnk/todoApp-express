@@ -2,7 +2,19 @@ const express = require("express");
 const app = express();
 const tasksRoute = require("./routes/tasks");
 const PORT = 3000;
+const connectDB = require("./db/connect");
+require("dotenv").config();
 
+// ルーティング設定
 app.use("/api/v1/tasks", tasksRoute);
 
-app.listen(PORT, console.log("ローカルサーバー起動"));
+// DBと接続、ローカルサーバー起動
+const start = async () => {
+    try {
+        connectDB(process.env.MONGO_URL);
+        app.listen(PORT, console.log("ローカルサーバー起動"));
+    } catch (err) {
+        console.log(err);
+    }
+};
+start();
