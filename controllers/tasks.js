@@ -1,7 +1,12 @@
 const Task = require("../models/Tasks");
 
-const getAllTasks = (req, res) => {
-    res.send("タスクを全て取得");
+const getAllTasks = async (req, res) => {
+    try {
+        const allTask = await Task.find({});
+        res.status(200).json(allTask);
+    } catch (err) {
+        res.status(500).json(err);
+    }
 };
 
 const createTask = async (req, res) => {
@@ -13,8 +18,16 @@ const createTask = async (req, res) => {
     }
 };
 
-const getSingleTask = (req, res) => {
-    res.send("特定のタスクを取得しました");
+const getSingleTask = async (req, res) => {
+    try {
+        const getSingleTask = await Task.findOne({ _id: req.params.id });
+        if (!getSingleTask) {
+            return res.status(404).json(`_id: ${req.params.id}は見つかりません。`);
+        }
+        res.status(200).json(getSingleTask);
+    } catch (err) {
+        res.status(500).json(err);
+    }
 };
 
 const updateTask = (req, res) => {
