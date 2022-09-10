@@ -30,8 +30,16 @@ const getSingleTask = async (req, res) => {
     }
 };
 
-const updateTask = (req, res) => {
-    res.send("特定のタスクを更新しました");
+const updateTask = async (req, res) => {
+    try {
+        const updateTaks = await Task.findOneAndUpdate({ _id: req.params.id }, req.body, { new: true });
+        if (!updateTaks) {
+            return res.status(404).json(`_id: ${req.params.id}は見つかりません。`);
+        }
+        res.status(200).json(updateTaks);
+    } catch (err) {
+        res.status(500).json(err);
+    }
 };
 
 const deleteTask = (req, res) => {
