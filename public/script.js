@@ -1,9 +1,8 @@
 /**
- * api/v1/tasksからタスクを読み込む
+ * タスクの読み込み
  */
 
-const tasksDOM = document.querySelector(".tasks");
-
+const taskList = document.querySelector(".tasks");
 const showTasks = async () => {
     try {
         const { data: tasks } = await axios.get("/api/v1/tasks");
@@ -29,10 +28,28 @@ const showTasks = async () => {
                         </li>`;
             })
             .join("");
-        tasksDOM.innerHTML = allTasks;
+        taskList.innerHTML = allTasks;
     } catch (err) {
         console.log(err);
     }
 };
 
 showTasks();
+
+/**
+ * タスクの作成
+ */
+const formDOM = document.querySelector(".task-form");
+const taskInputDOM = document.querySelector(".task-input");
+formDOM.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const name = taskInputDOM.value;
+
+    try {
+        await axios.post("/api/v1/tasks", { name: name });
+        showTasks();
+        taskInputDOM.value = "";
+    } catch (error) {
+        console.log(error);
+    }
+});
