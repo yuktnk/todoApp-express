@@ -1,6 +1,7 @@
 const taskList = document.querySelector(".tasks");
 const formDOM = document.querySelector(".task-form");
 const taskInputDOM = document.querySelector(".task-input");
+const formAlertDOM = document.querySelector(".form-alert");
 
 /**
  * タスクの読み込み
@@ -55,9 +56,19 @@ formDOM.addEventListener("submit", async (e) => {
         await axios.post("/api/v1/tasks", { name: name });
         showTasks();
         taskInputDOM.value = "";
+        formAlertDOM.style.display = "block";
+        formAlertDOM.innerHTML = "タスクを追加しました";
+        formAlertDOM.classList.add("text-success");
     } catch (error) {
         console.log(error);
+        formAlertDOM.style.display = "block";
+        formAlertDOM.classList.remove("text-success");
+        formAlertDOM.innerHTML = "20文字以内で入力してください";
     }
+    setTimeout(() => {
+        formAlertDOM.style.display = "none";
+        formAlertDOM.innerHTML = "";
+    }, 3000);
 });
 
 /**
