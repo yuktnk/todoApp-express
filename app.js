@@ -14,7 +14,7 @@ app.use("/api/v1/tasks", tasksRoute);
 const start = async () => {
     try {
         connectDB(process.env.MONGO_URL);
-        app.listen(PORT, console.log("ローカルサーバー起動"));
+        app.listen(process.env.PORT || PORT, console.log("ローカルサーバー起動"));
     } catch (err) {
         console.log(err);
     }
