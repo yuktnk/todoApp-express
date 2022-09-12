@@ -13,7 +13,7 @@ app.use("/api/v1/tasks", tasksRoute);
 // DBと接続、ローカルサーバー起動
 const start = async () => {
     try {
-        connectDB(process.env.MONGO_URL);
+        connectDB(process.env.MONGO_HEROKU_URL || process.env.MONGO_URL);
         app.listen(process.env.PORT || PORT, console.log("ローカルサーバー起動"));
     } catch (err) {
         console.log(err);
