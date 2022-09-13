@@ -1,7 +1,7 @@
 const express = require("express");
 const app = express();
 const tasksRoute = require("./routes/tasks");
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 const connectDB = require("./db/connect");
 require("dotenv").config();
 app.use(express.json());
@@ -14,7 +14,7 @@ app.use("/api/v1/tasks", tasksRoute);
 const start = async () => {
     try {
         await connectDB(process.env.MONGO_HEROKU_URL || process.env.MONGO_URL);
-        app.listen(process.env.PORT || PORT, console.log("ローカルサーバー起動"));
+        app.listen(PORT, console.log("サーバー起動"));
     } catch (err) {
         console.log(err);
     }

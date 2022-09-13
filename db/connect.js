@@ -4,9 +4,10 @@ const connectDB = (url) => {
     return mongoose
         .connect(url)
         .then(() => {
-            console.log("- - DBと接続中 - -");
+            console.log("--- DBと接続中 ---");
         })
         .catch((err) => {
+            console.log("--- DB接続エラー ---");
             console.log(err);
         });
 };
