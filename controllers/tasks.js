@@ -2,7 +2,7 @@ const Task = require("../models/Tasks");
 
 const getAllTasks = async (req, res) => {
     try {
-        const allTask = await Task.find({});
+        const allTask = await Task.find();
         res.status(200).json(allTask);
     } catch (err) {
         res.status(500).json(err);
@@ -12,7 +12,7 @@ const getAllTasks = async (req, res) => {
 const createTask = async (req, res) => {
     try {
         const createTask = await Task.create(req.body);
-        res.status(200).json(createTask);
+        res.status(201).json(createTask);
     } catch (err) {
         res.status(500).json(err);
     }
@@ -20,7 +20,7 @@ const createTask = async (req, res) => {
 
 const getSingleTask = async (req, res) => {
     try {
-        const getSingleTask = await Task.findOne({ _id: req.params.id });
+        const getSingleTask = await Task.findOne({ _id: req.params.id }).lean().exec();
         if (!getSingleTask) {
             return res.status(404).json(`_id: ${req.params.id}は見つかりません。`);
         }
@@ -32,7 +32,7 @@ const getSingleTask = async (req, res) => {
 
 const updateTask = async (req, res) => {
     try {
-        const updateTask = await Task.findOneAndUpdate({ _id: req.params.id }, req.body, { new: true });
+        const updateTask = await Task.findOneAndUpdate({ _id: req.params.id }, req.body, { new: true }).lean().exec();
         if (!updateTask) {
             return res.status(404).json(`_id: ${req.params.id}は見つかりません。`);
         }
