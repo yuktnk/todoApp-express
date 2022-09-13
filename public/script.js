@@ -13,7 +13,7 @@ const showTasks = async () => {
         // タスクがひとつもないとき
         if (tasks.length < 1) {
             taskList.innerHTML = `<h5 class="empty-list">全てのタスクを完了しました</h5>`;
-            reuturn;
+            return;
         }
 
         const allTasks = tasks
